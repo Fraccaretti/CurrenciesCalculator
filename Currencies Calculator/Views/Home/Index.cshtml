@@ -1,0 +1,83 @@
+﻿@{
+	ViewData["Title"] = "Currencies Exchange Web Application v0.1";
+}
+
+@{
+	ViewBag.Title = "Exchange";
+}
+
+@using (Html.BeginForm("Exchange", "Home", FormMethod.Get))
+{
+
+<fieldset>
+	<br />
+	Pick the first currency
+
+	@Html.DropDownList("FirstCurrency", null, new { @id = "FirstCurrency" })
+	<br />
+	<br />
+	Pick the second currency
+
+	@Html.DropDownList("SecondCurrency", null, new { @id = "SecondCurrency" })
+	<br />
+	<br />
+	<input type="number" required name="Amount" min="0" value="0" step=.01 id="Amount">
+	<br />
+	<br />
+	<p>
+		<button type="button"
+				class="btn btn-primary"
+				id="Exchange">
+			Exchange
+		</button>
+
+	</p>
+	<br />
+	<br />
+	<p>
+		Exchanged amount:&nbsp;<b id="ExchangedAmount"></b>&nbsp;<b id="CurrencyCode"></b>.
+	</p>
+	<br />
+	<br />
+	<p>
+		If you had exchanged it on <b id="MaxExchangedDate"></b>, you would have get a <b id="MaxExchangedAmount"></b>&nbsp;<b id="CurrencyCode"></b>.
+	</p>
+</fieldset>
+
+}
+
+@section scripts {
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#Exchange").click(function () {
+				if ($("#FirstCurrency").val() == $("#SecondCurrency").val()) {
+					alert("To exchange select different currencies");
+				} else if ($("#Amount").val() == "0") {
+					alert("To exchange input valid amount");
+				} else {
+					if (!isNaN($("#Amount").val())) {
+						$.ajax({
+							type: "GET",
+							url: "/Home/Exchange",
+							contentType: "application/json; charset=utf-8",
+							data: { firstCurrency: $("#FirstCurrency").val(), secondCurrency: $("#SecondCurrency").val(), amount: $("#Amount").val()},
+							success: function (result, status, xhr) {
+								$("#ExchangedAmount").text(result[0]);
+								$("#MaxExchangedAmount").text(result[1]);
+								$("#MaxExchangedDate").text(result[2]);
+								$("SecondCurrencyCode").text($("#SecondCurrency").val());
+							},
+							error: function (xhr, status, error) {
+								$("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+							}
+						});
+					} else {
+						alert("Given input not a number");
+					}
+				}
+			});
+		});
+	</script>
+}

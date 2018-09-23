@@ -2,26 +2,20 @@
 	ViewData["Title"] = "Currencies Exchange Web Application v0.1";
 }
 
-@{
-	ViewBag.Title = "Exchange";
-}
-
-@using (Html.BeginForm("Exchange", "Home", FormMethod.Get))
-{
-
+@model Currencies_Calculator.Models.IndexViewModel
 <fieldset>
 	<br />
 	Pick the first currency
 
-	@Html.DropDownList("FirstCurrency", null, new { @id = "FirstCurrency" })
+	@Html.DropDownList("FirstCurrency", Model.CurrenciesCodes, new { @id = "FirstCurrency" })
 	<br />
 	<br />
 	Pick the second currency
 
-	@Html.DropDownList("SecondCurrency", null, new { @id = "SecondCurrency" })
+	@Html.DropDownList("SecondCurrency", Model.CurrenciesCodes, new { @id = "SecondCurrency" })
 	<br />
 	<br />
-	<input type="number" required name="Amount" min="0" value="0" step=.01 id="Amount">
+	<input type="text" required name="Amount" min="0.01" step="0.01" placeholder="0.00" id="Amount">
 	<br />
 	<br />
 	<p>
@@ -35,16 +29,14 @@
 	<br />
 	<br />
 	<p id="ExchangedAmount">
-		
+
 	</p>
 	<br />
 	<br />
 	<p id="MaxExchanged">
-		
+
 	</p>
 </fieldset>
-
-}
 
 @section scripts {
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -52,31 +44,35 @@
 		function validateForm() {
 			var isValid = false;
 			if ($("#FirstCurrency").val() == $("#SecondCurrency").val()) {
-				alert("To exchange select different currencies");
-			} else if ($("#Amount").val() == "0") {
-				alert("To exchange input valid amount");
+				alert("Select different currencies");
+			} else if ($("#Amount").val().is <= 0) {
+				alert("Amount must be positive");
+			} else if (isNaN($("#Amount").val())) {
+				alert("Input is not a number");
+			} else if ($("#Amount").val().toString().includes(`,`) == true) {
+				alert("Use dot as a decimal separator");
 			} else {
-				if (!isNaN($("#Amount").val())) {
-					isValid = true;
-				} else {
-					alert("Input is not a number");
-				}
+				isValid = true;
 			}
-			debugger;
+			
 			return isValid;
 		}
 	</script>
-			
+
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("#Exchange").click(function () {
+				var a = $("#Amount").val().toString();
+
+				console.log(`a = ${a}`);
 				console.log("exchanged clicked");
 				if (validateForm() == true) {
-					debugger;
-					$.post("/Home/Exchange", { firstCurrency: $("#FirstCurrency").val(), secondCurrency: $("#SecondCurrency").val(), amount: $("#Amount").val() },
-						function (rates) {
-							$("#ExchangedAmount").text("Exchanged amount: " + rates[0] + " " + $("#SecondCurrency").val());
-							$("#MaxExchanged").text("If you had exchanged it on " + rates[2] + ", you would have get a " + rates[1] + " " + $("#SecondCurrency").val());
+					$.post("/Home/Exchange", { firstCurrency: $("#FirstCurrency").val(), secondCurrency: $("#SecondCurrency").val(), amountString: $("#Amount").val() },
+						function (result) {
+							var jsonObject = $.parseJSON(result)
+							$("#ExchangedAmount").text(`Exchanged amount: ${jsonObject.PresentExchangedAmount} ${$("#SecondCurrency").val()}`);
+							$("#MaxExchanged").text(`If you had exchanged it on ${jsonObject.MaxExchangedDate} , you would have get a ${jsonObject.MaxExchangedAmount} ${$("#SecondCurrency").val()}`);
+
 						});
 				}
 			});

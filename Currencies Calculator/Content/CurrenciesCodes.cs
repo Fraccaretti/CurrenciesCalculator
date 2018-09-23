@@ -9,27 +9,20 @@ using System.Linq;
 
 namespace Currencies_Calculator
 {
-    public class CurrenciesSerializer
+    public class CurrenciesCodes
     {
         public static List<string> DeserializeFromFile()
         {
             string path = Path.Combine(Environment.CurrentDirectory, @"Content\Currencies.json");
-            List<string> items = new List<string>();
+            Dictionary<string, Dictionary<string, string>> dict = new Dictionary<string, Dictionary<string, string>>();
 
             using (StreamReader file = File.OpenText(path))
             {
                 string jsonString = file.ReadToEnd();
-
-                Dictionary<string, Dictionary<string, string>> dict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonString);
-
-                foreach (string jsonCurrency in dict.Keys)
-                {
-
-                    items.Add(jsonCurrency);
-                }
+                dict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonString);
             }
 
-            return items;
+            return dict.Keys.ToList<string>();
         }
     }
 }

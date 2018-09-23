@@ -6,36 +6,39 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Currencies_Calculator.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Currencies_Calculator.Content;
 using RestSharp;
 using Newtonsoft.Json.Linq;
 using OnlineCantor;
+using System.Globalization;
 
 namespace Currencies_Calculator.Controllers
 {
     public class HomeController : Controller
     {
+
         public IActionResult Index()
         {
             List<SelectListItem> items = new List<SelectListItem>();
 
-            foreach (var currency in InMemoryDataBase.CurrenciesList)
+            foreach (var currency in CurrenciesCodes.DeserializeFromFile())
             {
                 items.Add(new SelectListItem { Text = currency, Value = currency});
             }
 
-            ViewBag.FirstCurrency = items;
-            ViewBag.SecondCurrency = items;
+            IndexViewModel model = new IndexViewModel(items);
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult<string[]> Exchange(string firstCurrency, string secondCurrency, float amount)
+        public ActionResult<string> Exchange(string firstCurrency, string secondCurrency, string amountString)
         {
-            Cantor cantor = new Cantor();
-            var result = cantor.Exchange(firstCurrency, secondCurrency, amount);
-            if (!result.Any())
+            var provider = new CultureInfo("en-US");
+            decimal amount = Decimal.Parse(amountString, provider);
+
+            CantorService cantorServiceClient = new CantorService();
+            var result = cantorServiceClient.Exchange(new ExchangeParams(firstCurrency, secondCurrency, amount));
+            if (result == null)
             {
                 return NotFound();
             }

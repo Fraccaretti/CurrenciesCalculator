@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Currencies_Calculator.Content;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,13 +14,7 @@ namespace Currencies_Calculator
     {
         public static void Main(string[] args)
         {
-            PopulateInMemoryDataBase();
             CreateWebHostBuilder(args).Build().Run();
-        }
-
-        private static void PopulateInMemoryDataBase()
-        {
-            InMemoryDataBase.CurrenciesList = CurrenciesSerializer.DeserializeFromFile();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

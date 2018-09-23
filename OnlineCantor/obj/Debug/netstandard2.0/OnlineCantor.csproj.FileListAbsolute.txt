@@ -1,0 +1,9 @@
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\bin\Debug\netstandard2.0\OnlineCantor.deps.json
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\bin\Debug\netstandard2.0\OnlineCantor.dll
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\obj\Debug\netstandard2.0\OnlineCantor.csprojAssemblyReference.cache
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\obj\Debug\netstandard2.0\OnlineCantor.csproj.CoreCompileInputs.cache
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\obj\Debug\netstandard2.0\OnlineCantor.AssemblyInfoInputs.cache
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\obj\Debug\netstandard2.0\OnlineCantor.AssemblyInfo.cs
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\bin\Debug\netstandard2.0\OnlineCantor.pdb
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\obj\Debug\netstandard2.0\OnlineCantor.dll
+C:\Users\Piotr\Documents\Projekty\ASP.Net\Currencies Calculator\OnlineCantor\obj\Debug\netstandard2.0\OnlineCantor.pdb

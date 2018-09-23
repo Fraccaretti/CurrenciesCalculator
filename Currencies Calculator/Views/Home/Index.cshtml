@@ -34,13 +34,13 @@
 	</p>
 	<br />
 	<br />
-	<p>
-		Exchanged amount:&nbsp;<b id="ExchangedAmount"></b>&nbsp;<b id="CurrencyCode"></b>.
+	<p id="ExchangedAmount">
+		
 	</p>
 	<br />
 	<br />
-	<p>
-		If you had exchanged it on <b id="MaxExchangedDate"></b>, you would have get a <b id="MaxExchangedAmount"></b>&nbsp;<b id="CurrencyCode"></b>.
+	<p id="MaxExchanged">
+		
 	</p>
 </fieldset>
 
@@ -48,34 +48,36 @@
 
 @section scripts {
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+	<script type="text/javascript">
+		function validateForm() {
+			var isValid = false;
+			if ($("#FirstCurrency").val() == $("#SecondCurrency").val()) {
+				alert("To exchange select different currencies");
+			} else if ($("#Amount").val() == "0") {
+				alert("To exchange input valid amount");
+			} else {
+				if (!isNaN($("#Amount").val())) {
+					isValid = true;
+				} else {
+					alert("Input is not a number");
+				}
+			}
+			debugger;
+			return isValid;
+		}
+	</script>
+			
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("#Exchange").click(function () {
-				if ($("#FirstCurrency").val() == $("#SecondCurrency").val()) {
-					alert("To exchange select different currencies");
-				} else if ($("#Amount").val() == "0") {
-					alert("To exchange input valid amount");
-				} else {
-					if (!isNaN($("#Amount").val())) {
-						$.ajax({
-							type: "GET",
-							url: "/Home/Exchange",
-							contentType: "application/json; charset=utf-8",
-							data: { firstCurrency: $("#FirstCurrency").val(), secondCurrency: $("#SecondCurrency").val(), amount: $("#Amount").val()},
-							success: function (result, status, xhr) {
-								$("#ExchangedAmount").text(result[0]);
-								$("#MaxExchangedAmount").text(result[1]);
-								$("#MaxExchangedDate").text(result[2]);
-								$("SecondCurrencyCode").text($("#SecondCurrency").val());
-							},
-							error: function (xhr, status, error) {
-								$("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-							}
+				console.log("exchanged clicked");
+				if (validateForm() == true) {
+					debugger;
+					$.post("/Home/Exchange", { firstCurrency: $("#FirstCurrency").val(), secondCurrency: $("#SecondCurrency").val(), amount: $("#Amount").val() },
+						function (rates) {
+							$("#ExchangedAmount").text("Exchanged amount: " + rates[0] + " " + $("#SecondCurrency").val());
+							$("#MaxExchanged").text("If you had exchanged it on " + rates[2] + ", you would have get a " + rates[1] + " " + $("#SecondCurrency").val());
 						});
-					} else {
-						alert("Given input not a number");
-					}
 				}
 			});
 		});

@@ -2807,7 +2807,7 @@
           "lib/netstandard1.0/Remotion.Linq.dll": {}
         }
       },
-      "RestSharp/106.3.1": {
+      "RestSharp/106.4.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/RestSharp.dll": {}
@@ -4623,6 +4623,21 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
+        }
+      },
+      "OnlineCantor/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "Newtonsoft.Json": "11.0.2",
+          "RestSharp": "106.4.1"
+        },
+        "compile": {
+          "bin/placeholder/OnlineCantor.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OnlineCantor.dll": {}
         }
       }
     }
@@ -7549,14 +7564,17 @@
         "remotion.linq.nuspec"
       ]
     },
-    "RestSharp/106.3.1": {
-      "sha512": "TmlN7SXjK52zzpQDTuzw7IH3XQ2Svtss/4zvQBKIgf74QIVxvlxoAqQYu1EhNQ1bMSBIQ4aK120BO7W+v8/kiQ==",
+    "RestSharp/106.4.1": {
+      "sha512": "VRxJs40Pg9E0uHA+4/DYQwhP6Jvr7b+2bEOoop/k9hBrRtqtZW2M1r2snB9CummnZB3/JtS0ZAvs23oQFra4sQ==",
       "type": "package",
-      "path": "restsharp/106.3.1",
+      "path": "restsharp/106.4.1",
       "files": [
+        ".signature.p7s",
         "lib/net452/RestSharp.dll",
+        "lib/net452/RestSharp.xml",
         "lib/netstandard2.0/RestSharp.dll",
-        "restsharp.106.3.1.nupkg.sha512",
+        "lib/netstandard2.0/RestSharp.xml",
+        "restsharp.106.4.1.nupkg.sha512",
         "restsharp.nuspec"
       ]
     },
@@ -12228,14 +12246,22 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
+    },
+    "OnlineCantor/1.0.0": {
+      "type": "project",
+      "path": "../OnlineCantor/OnlineCantor.csproj",
+      "msbuildProject": "../OnlineCantor/OnlineCantor.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Microsoft.AspNetCore.App >= 2.1.1",
+      "Microsoft.CSharp >= 4.5.0",
       "Microsoft.NETCore.App >= 2.1.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.1",
-      "RestSharp >= 106.3.1"
+      "Newtonsoft.Json >= 11.0.2",
+      "OnlineCantor >= 1.0.0",
+      "RestSharp >= 106.4.1"
     ]
   },
   "packageFolders": {
@@ -12267,7 +12293,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Piotr\\Documents\\Projekty\\ASP.Net\\Currencies Calculator\\OnlineCantor\\OnlineCantor.csproj": {
+              "projectPath": "C:\\Users\\Piotr\\Documents\\Projekty\\ASP.Net\\Currencies Calculator\\OnlineCantor\\OnlineCantor.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -12285,6 +12315,10 @@
             "version": "[2.1.1, )",
             "autoReferenced": true
           },
+          "Microsoft.CSharp": {
+            "target": "Package",
+            "version": "[4.5.0, )"
+          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "[2.1.0, )",
@@ -12294,9 +12328,13 @@
             "target": "Package",
             "version": "[2.1.1, )"
           },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[11.0.2, )"
+          },
           "RestSharp": {
             "target": "Package",
-            "version": "[106.3.1, )"
+            "version": "[106.4.1, )"
           }
         },
         "imports": [

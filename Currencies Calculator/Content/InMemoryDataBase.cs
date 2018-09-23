@@ -8,6 +8,6 @@ namespace Currencies_Calculator.Content
 {
     public class InMemoryDataBase
     {
-        public static List<Currency> CurrenciesList = new List<Currency>();
+        public static List<string> CurrenciesList = new List<string>();
     }   
 }
